@@ -1,0 +1,110 @@
+body {
+	background: #eee;
+}
+
+#bill {
+	background: #fff;
+	border: 1px solid #ccc;
+	/*margin: 20px 0;*/
+}
+
+#bill-inner {
+	padding: 30px 30px 20px 50px;
+}
+
+h1.top-title {
+    margin: 0 0 20px 30px;
+}
+
+.company-input {
+    background: transparent;
+    border: none;
+    overflow: auto;
+    width: 100%;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+.company-input h3 {
+    margin: 0;
+}
+
+.row.item {
+}
+
+.row.options {
+    margin: 10px 0 20px;
+}
+
+.row.table {
+	margin-top: 30px;
+}
+
+.row.item.head {
+    font-weight: bold;
+    border-top-color: #ccc;
+    border-bottom-color: #ccc;
+}
+
+.row.item.head div {
+	background: #eee;
+    border-top: 1px solid #ddd;
+}
+
+.row.item div {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.row.item .id {
+    padding-left: 5px;
+    text-align: right;
+}
+
+.row.item .invoice-line-item-remove {
+    float: left;
+    position: relative;
+    margin-left: -1.5em;
+    margin-top: 0.5em;
+    cursor: pointer;
+}
+
+.row.item div.col-xs-6 {
+    border-left: 1px solid #ddd;
+}
+
+.row.operations {
+    margin-top: 20px;
+}
+
+.row.results {
+    margin-top: 40px;
+}
+
+input.text-input,
+input.number-input {
+    background: transparent;
+    border: none;
+    width: 100%;
+    outline: none;
+}
+
+input.number-input {
+    text-align: right;
+}
+
+.right-aligned-title {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 0;
+}
+
+@media print {
+	.add-item,
+	.invoice-line-item-remove { 
+		display: none;
+	}
+}

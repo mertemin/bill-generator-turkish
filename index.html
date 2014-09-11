@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Fatura Oluşturma Servisi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="all">
+	<meta http-equiv="pragma" content="no-cache">
+    
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	
+	<link rel="stylesheet" href="css/main.css">
+	<script src="js/main.js"></script>
+
+    <!-- IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<h1 class="text-center">Fatura Oluşturma Servisi</h1>
+	</div>
+	<div class="row options">
+		<div class="col-xs-4"></div>
+		<div class="col-xs-2">
+			KDV
+			<select id="vat-option" class="option">
+				<option value="1">Yok</option>
+				<option value="2" selected>% Yüzde</option>
+				<option value="3">Net</option>
+			</select>
+		</div>
+		<div class="col-xs-2">
+			İskonto
+			<select id="discount-option" class="option">
+				<option value="1">Yok</option>
+				<option value="2" selected>% Yüzde</option>
+				<option value="3">Net</option>
+			</select>
+		</div>
+	</div>
+	<div class="row options text-center">
+		<input type="button" class="btn btn-default" onclick="printPage()" value="Çıktı Al"/>
+	</div>
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1" id="bill">
+			<div id="bill-inner">
+				<div class="row">
+					<div class="col-xs-9">
+						<div class="company-input" contenteditable>
+							<strong>Şirket Adı</strong>
+							<p>Mah. Cadde. Sokak. No: X İlçe - İl<br/>
+							Tel: 0 (123) 456 78 90 - Fax: 0 (123) 456 78 90<br/>
+							email: info@sirketadi.com - www.sirketadi.com<br />
+							Vergi Dairesi / Vergi Numarası</p>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<h1 class="top-title">FATURA</h1>
+						<div class="row text-right">
+							<div class="col-xs-4 right-aligned-title">Seri</div>
+							<div class="col-xs-8"><input type="text" class="text-input" placeholder="A 12345" /></div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4 right-aligned-title">Tarih</div>
+							<div class="col-xs-8"><input type="text" class="text-input" data="date" /></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-9">
+						<div class="company-input" contenteditable>
+							<strong>Şirket Adı</strong>
+							<p>Mah. Cadde. Sokak. No: X İlçe - İl<br/>
+							Tel: 0 (123) 456 78 90 - Fax: 0 (123) 456 78 90<br/>
+							email: info@sirketadi.com - www.sirketadi.com<br />
+							Vergi Dairesi / Vergi Numarası</p>
+						</div>
+					</div>
+					<div class="col-xs-3">
+			
+					</div>
+				</div>
+				<div class="row operations">
+					<button type="button" class="btn btn-default btn-sm add-item">Ürün Ekle</button>
+				</div>
+				<div class="row table">
+					<div class="col-xs-12">
+						<div class="row item head">
+							<div class="col-xs-6">Açıklama</div>
+							<div class="col-xs-2">Miktar</div>
+							<div class="col-xs-2">Birim Fiyatı</div>
+							<div class="col-xs-2">Tutar</div>
+						</div>
+						<div class="items">
+							<div class="row item" id="item-1">
+								<div class="col-xs-6"><input type="text" class="text-input" value="Açıklamayı buraya giriniz." /></div>
+								<div class="col-xs-2"><input type="text" class="number-input" maxlength="10" data="quantity" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="1" /></div>
+								<div class="col-xs-2"><input type="text" class="number-input" maxlength="10" data="price" onkeypress="return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" value="100.00" /></div>
+								<div class="col-xs-2"><input type="text" class="number-input" data="total" value="100.00" disabled /></div>
+							</div>
+						</div>
+						<div class="row results">
+							<div class="col-xs-8">
+								<div class="row">
+									<p><strong>Yalnız</strong></p>
+									<p data="grandtotal-text"></p>
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="row">
+									<div class="col-xs-6 right-aligned-title">Ara Toplam</div>
+									<div class="col-xs-6"><input type="text" class="number-input" data="subtotal" value="100" disabled /></div>
+								</div>
+								<div class="row" id="discount-option-row">
+									<div class="col-xs-6 right-aligned-title">İskonto</div>
+									<div class="col-xs-6"><input type="text" class="number-input" data="discount" value="0" /></div>
+								</div>
+								<div class="row" id="vat-option-row">
+									<div class="col-xs-6 right-aligned-title">K.D.V.</div>
+									<div class="col-xs-6"><input type="text" class="number-input" data="vat" value="18" /></div>
+								</div>
+								<div class="row">
+									<div class="col-xs-6 right-aligned-title">Genel Toplam</div>
+									<div class="col-xs-6"><input type="text" class="number-input" data="grandtotal" value="118" disabled /></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<p><strong>Not</strong></p>
+							<div class="company-input" contenteditable>...</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
