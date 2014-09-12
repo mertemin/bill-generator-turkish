@@ -1,7 +1,6 @@
 # Bill Generator in Turkish
 This is a web application to generate bills. It is in Turkish.
 
-=======
 # Demo
 [Click for a demo](http://mertemin.github.io/bill-generator-turkish)
 
