@@ -2,14 +2,19 @@ body {
 	background: #eee;
 }
 
+p {
+	margin-bottom: 0;
+}
+
 #bill {
 	background: #fff;
 	border: 1px solid #ccc;
+	margin-bottom: 40px;
 	/*margin: 20px 0;*/
 }
 
 #bill-inner {
-	padding: 30px 30px 20px 50px;
+	padding: 60px 10px 30px 30px;
 }
 
 h1.top-title {
@@ -23,6 +28,11 @@ h1.top-title {
     width: 100%;
     outline: none;
     margin-bottom: 10px;
+    line-height: 18pt;
+}
+
+.company-input:focus {
+	background: #efefef;
 }
 
 .company-input h3 {
@@ -30,6 +40,13 @@ h1.top-title {
 }
 
 .row.item {
+	height: 100%;
+	display: table-row;
+}
+
+.row.item > div[class*='col-'] {
+	display: table-cell;
+	float: none;
 }
 
 .row.options {
@@ -51,7 +68,7 @@ h1.top-title {
     border-top: 1px solid #ddd;
 }
 
-.row.item div {
+.row.item div[class*='col-x'] {
     padding-top: 4px;
     padding-bottom: 4px;
     border-right: 1px solid #ddd;
@@ -84,16 +101,29 @@ h1.top-title {
     margin-top: 40px;
 }
 
-input.text-input,
+span[contenteditable="true"] {
+	text-decoration: underline;
+}
+
+p.text-input,
+span.number-input,
 input.number-input {
     background: transparent;
     border: none;
     width: 100%;
     outline: none;
+    margin-bottom: 0;
 }
 
+span.number-input,
 input.number-input {
     text-align: right;
+}
+
+p.text-input:focus,
+span.number-input:focus,
+input.number-input:focus {
+	background: #efefef;
 }
 
 .right-aligned-title {
@@ -104,7 +134,14 @@ input.number-input {
 
 @media print {
 	.add-item,
-	.invoice-line-item-remove { 
+	.invoice-line-item-remove,
+	.title { 
 		display: none;
+	}
+	
+	#bill {
+		position: fixed;
+		top: 0;
+		left: 0;
 	}
 }

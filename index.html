@@ -10,9 +10,6 @@
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
 	<!-- Latest compiled and minified JavaScript -->
 	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -27,7 +24,7 @@
 </head>
 <body>
 <div class="container">
-	<div class="row">
+	<div class="row title">
 		<h1 class="text-center">Fatura Oluşturma Servisi</h1>
 	</div>
 	<div class="row options">
@@ -66,14 +63,12 @@
 						</div>
 					</div>
 					<div class="col-xs-3">
-						<h1 class="top-title">FATURA</h1>
+						<h1 class="top-title text-right">FATURA</h1>
 						<div class="row text-right">
-							<div class="col-xs-4 right-aligned-title">Seri</div>
-							<div class="col-xs-8"><input type="text" class="text-input" placeholder="A 12345" /></div>
+							<span class="right-aligned-title">Seri</span> <span contenteditable class="text-input">A 12345</span>
 						</div>
-						<div class="row">
-							<div class="col-xs-4 right-aligned-title">Tarih</div>
-							<div class="col-xs-8"><input type="text" class="text-input" data="date" /></div>
+						<div class="row text-right">
+							<span class="right-aligned-title">Tarih</span> <span contenteditable class="text-input" data="date"></span>
 						</div>
 					</div>
 				</div>
@@ -87,12 +82,11 @@
 							Vergi Dairesi / Vergi Numarası</p>
 						</div>
 					</div>
-					<div class="col-xs-3">
-			
-					</div>
 				</div>
 				<div class="row operations">
-					<button type="button" class="btn btn-default btn-sm add-item">Ürün Ekle</button>
+					<div class="col-xs-12">
+						<button type="button" class="btn btn-default btn-sm add-item">Ürün Ekle</button>
+					</div>
 				</div>
 				<div class="row table">
 					<div class="col-xs-12">
@@ -103,42 +97,42 @@
 							<div class="col-xs-2">Tutar</div>
 						</div>
 						<div class="items">
-							<div class="row item" id="item-1">
-								<div class="col-xs-6"><input type="text" class="text-input" value="Açıklamayı buraya giriniz." /></div>
-								<div class="col-xs-2"><input type="text" class="number-input" maxlength="10" data="quantity" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="1" /></div>
-								<div class="col-xs-2"><input type="text" class="number-input" maxlength="10" data="price" onkeypress="return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" value="100.00" /></div>
-								<div class="col-xs-2"><input type="text" class="number-input" data="total" value="100.00" disabled /></div>
-							</div>
 						</div>
 						<div class="row results">
 							<div class="col-xs-8">
 								<div class="row">
-									<p><strong>Yalnız</strong></p>
-									<p data="grandtotal-text"></p>
+									<div class="col-xs-12">
+										<p><strong>Yalnız</strong></p>
+										<p data="grandtotal-text"></p>
+									</div>
 								</div>
 							</div>
 							<div class="col-xs-4">
 								<div class="row">
 									<div class="col-xs-6 right-aligned-title">Ara Toplam</div>
-									<div class="col-xs-6"><input type="text" class="number-input" data="subtotal" value="100" disabled /></div>
+									<div class="col-xs-6"><p class="text-right"><span class="number-input" data="subtotal"></span></p></div>
 								</div>
 								<div class="row" id="discount-option-row">
+									<p class="hidden" id="discount-option-hidden"></p>
 									<div class="col-xs-6 right-aligned-title">İskonto</div>
-									<div class="col-xs-6"><input type="text" class="number-input" data="discount" value="0" /></div>
+									<div class="col-xs-6"><p class="text-right"><span contenteditable class="number-input" data="discount">0</span></p></div>
 								</div>
 								<div class="row" id="vat-option-row">
+									<p class="hidden" id="vat-option-hidden"></p>
 									<div class="col-xs-6 right-aligned-title">K.D.V.</div>
-									<div class="col-xs-6"><input type="text" class="number-input" data="vat" value="18" /></div>
+									<div class="col-xs-6"><p class="text-right"><span contenteditable class="number-input" data="vat">18</span></p></div>
 								</div>
 								<div class="row">
 									<div class="col-xs-6 right-aligned-title">Genel Toplam</div>
-									<div class="col-xs-6"><input type="text" class="number-input" data="grandtotal" value="118" disabled /></div>
+									<div class="col-xs-6"><p class="text-right"><span class="number-input" data="grandtotal"></span></p></div>
 								</div>
 							</div>
 						</div>
 						<div class="row">
-							<p><strong>Not</strong></p>
-							<div class="company-input" contenteditable>...</div>
+							<div class="col-xs-12">
+								<p><strong>Not</strong></p>
+								<div class="company-input" contenteditable>...</div>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -1,6 +1,12 @@
 # Bill Generator in Turkish
 This is a web application to generate bills. It is in Turkish.
 
+<<<<<<< HEAD
+=======
+# Demo
+[Click for a demo](http://mertemin.github.io/bill-generator-turkish)
+
+>>>>>>> 4de7f576f39697dfa2e300b03c0125745b396e8b
 ## Changelog
 * **v0.01** - Application is up and running.
 
@@ -8,6 +14,7 @@ This is a web application to generate bills. It is in Turkish.
 * [base css](http://twitter.github.com/bootstrap/) -- Twitter Bootstrap
 
 ## License
+<<<<<<< HEAD
 The MIT License
 
 Copyright (c) 2012, mertemin
@@ -29,3 +36,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+=======
+The MIT License
+>>>>>>> 4de7f576f39697dfa2e300b03c0125745b396e8b

@@ -1,11 +1,12 @@
 $(document).ready(function() {
-	var today = new Date();
-	var twoDigitMonth = today.getMonth() < 9 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1);
-	$("input[data='date']").val(today.getDate() + "." + twoDigitMonth + "." + today.getFullYear());
+	setDate();
+	setOptions();
+	
+	$(".add-item").trigger("click");
 });
 
-$(document).on("change", ".number-input", function() {
-    var value = $(this).val();
+$(document).on("keyup", ".number-input", function() {
+    var value = $(this).text();
     var parent = $(this).closest(".row").attr("id");
     updateItem(parent);
 });
@@ -20,6 +21,7 @@ $(document).on("change", ".option", function() {
 		$("#" + optionId + "-row").show();
 	}
 	
+	setOptions();
     updateTotal();
 });
 
@@ -34,11 +36,15 @@ $(document).on("click", ".add-item", function() {
     var nextId = "item-" + (length + 1);
     $(".items").append('<div class="row item" id="' + nextId + '"></div>');
     var nextIdSelector = "#" + nextId;
-    $(nextIdSelector).append('<span class="glyphicon glyphicon-trash invoice-line-item-remove"></span>');
-    $(nextIdSelector).append('<div class="col-xs-6"><input type="text" class="text-input" value="Açıklamayı buraya giriniz." /></div>');
-    $(nextIdSelector).append('<div class="col-xs-2"><input type="text" maxlength="10" class="number-input" data="quantity" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="1" /></div>');
-    $(nextIdSelector).append('<div class="col-xs-2"><input type="text" maxlength="10" class="number-input" data="price" onkeypress="return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" value="100.00" /></div>');
-    $(nextIdSelector).append('<div class="col-xs-2"><input type="text" class="number-input" data="total" value="100.00" disabled /></div>');
+    
+    if (length > 0) {
+    	$(nextIdSelector).append('<span class="glyphicon glyphicon-trash invoice-line-item-remove"></span>');
+    }
+    
+    $(nextIdSelector).append('<div class="col-xs-6"><p contenteditable class="text-input">Açıklamayı buraya giriniz.</p></div>');
+    $(nextIdSelector).append('<div class="col-xs-2"><p class="text-right"><span contenteditable class="number-input" data="quantity" onkeypress="return event.charCode >= 48 && event.charCode <= 57">1</span></p></div>');
+    $(nextIdSelector).append('<div class="col-xs-2"><p class="text-right"><span contenteditable class="number-input" data="price" onkeypress="return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)">100.00</span></p></div>');
+    $(nextIdSelector).append('<div class="col-xs-2"><p class="text-right"><span class="number-input" data="total">100.00</span></p></div>');
     updateItem(nextId);
 });
 
@@ -47,27 +53,38 @@ var numbers = {
     10: "On", 20: "Yirmi", 30: "Otuz", 40: "Kırk", 50: "Elli", 60: "Altmış", 70: "Yetmiş", 80: "Seksen", 90: "Doksan", 100: "Yüz", 1000: "Bin", 1000000: "Milyon", 1000000000: "Milyar", 1000000000000: "Trilyon"
 };
 
+function setDate() {
+	var today = new Date();
+	var twoDigitMonth = today.getMonth() < 9 ? "0" + (today.getMonth() + 1) : (today.getMonth() + 1);
+	$("span[data='date']").text(today.getDate() + "." + twoDigitMonth + "." + today.getFullYear());
+}
+
+function setOptions() {
+	$("#discount-option-hidden").text($("#discount-option option:selected").val());
+	$("#vat-option-hidden").text($("#vat-option option:selected").val());
+}
+
 function updateItem(itemId) {
-    var quantity = $("#" + itemId + " input[data='quantity']").val();
-    var price = $("#" + itemId + " input[data='price']").val();
+    var quantity = $("#" + itemId + " span[data='quantity']").text();
+    var price = $("#" + itemId + " span[data='price']").text();
     var total = (parseInt(quantity) * parseFloat(price)).toFixed(2);
-    $("#" + itemId + " input[data='total']").val(total);
+    $("#" + itemId + " span[data='total']").text(total);
     updateTotal();
 }
 
 function updateSubtotal() {
     var subtotal = 0;
-    $("input[data='total']").each(function() {
-        subtotal += parseFloat($(this).val());
+    $("span[data='total']").each(function() {
+        subtotal += parseFloat($(this).text());
     });
     subtotal = subtotal.toFixed(2);
-    $("input[data='subtotal']").val(subtotal);
+    $("span[data='subtotal']").text(subtotal);
     return parseFloat(subtotal);
 }
 
 function applyDiscount(subtotal) {
-	var discount = parseInt($("input[data='discount']").val());
-	var option = $("#discount-option option:selected").val();
+	var discount = parseInt($("span[data='discount']").text());
+	var option = $("#discount-option-hidden").text();
 	
 	if (option == "2") {
 		return subtotal - (subtotal * discount) / 100;
@@ -80,8 +97,8 @@ function applyDiscount(subtotal) {
 }
 
 function applyVat(total) {
-	var vat = parseInt($("input[data='vat']").val());
-	var option = $("#vat-option option:selected").val();
+	var vat = parseInt($("span[data='vat']").text());
+	var option = $("#vat-option-hidden").text();
 	
 	if (option == "2") {
 		return total + (total * vat) / 100;
@@ -99,7 +116,7 @@ function updateTotal() {
     var total = applyVat(discountedTotal);
     total = total.toFixed(2);
     
-    $("input[data='grandtotal']").val(total);
+    $("span[data='grandtotal']").text(total);
     $("p[data='grandtotal-text']").text(totalToText(total));
 }
 
@@ -148,7 +165,7 @@ function hundredsToText(number, order) {
     }
     
     quotient = (number % 10);
-    if (!((quotient == 0) || (quotient == 1 && order == 1000))) {
+    if (!((quotient == 0) || (number == 1 && order == 1000))) {
         text += " " + numbers[quotient];
     }
     
@@ -156,16 +173,34 @@ function hundredsToText(number, order) {
 }
 
 function printPage() {
-	/*var originalContent = $("html").html();
-	document.body.innerHTML = document.getElementById("bill").innerHTML;
+	var originalContent = $("html").clone().html();
+	var divContents = $("#bill").clone().html();
+	var headContents = $("head").html();
+	//document.body.innerHTML = divContents;
+	document.write('');
+	document.close();
+	
+	document.write("<html>");
+	document.write(headContents);
+	document.write("<body>");
+	document.write(divContents);
+	document.write("</body></html>");
 	window.print();
-	document.body.innerHTML = originalContent;*/
-	var divContents = $("#bill").html();
-            var printWindow = window.open('', '', 'height=400,width=800');
-            printWindow.document.write('<html><head><title>DIV Contents</title><link rel="stylesheet" href="css/main.css">');
-            printWindow.document.write('</head><body >');
-            printWindow.document.write(divContents);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
+	
+	document.body.innerHTML = originalContent;
+	
+	setDate();
+	setOptions();
+	updateTotal();
+	
+	/*var divContents = $("#bill").html();
+	var pWindow = window.open('', '', 'height=400,width=800');
+	pWindow.document.write("<html>");
+	pWindow.document.write($("head").html());
+	pWindow.document.write("<body>");
+	pWindow.document.write(divContents);
+	pWindow.document.write("</body></html>");
+	pWindow.document.close();
+	pWindow.print();
+	pWindow.close();*/
 }
